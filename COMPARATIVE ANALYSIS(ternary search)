@@ -1,0 +1,40 @@
+import java.util.Arrays;
+import java.util.Scanner;
+public class TernarySearch {
+public static int ternarySearch(int[] arr, int key, int left, int right) {
+        if (left > right) return -1; // Key not found
+        int mid1 = left + (right - left) / 3;
+        int mid2 = right - (right - left) / 3;
+        if (arr[mid1] == key) return mid1;
+        if (arr[mid2] == key) return mid2;
+        if (key < arr[mid1]) {
+            return ternarySearch(arr, key, left, mid1 - 1); // Search in first third
+        } else if (key > arr[mid2]) {
+            return ternarySearch(arr, key, mid2 + 1, right); // Search in third third
+        } else {
+            return ternarySearch(arr, key, mid1 + 1, mid2 - 1); // Search in middle third
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+       System.out.println("Enter the elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+        Arrays.sort(arr);
+        System.out.println("Sorted array: " + Arrays.toString(arr));
+        System.out.print("Enter the key to search: ");
+        int key = sc.nextInt();
+        int index = ternarySearch(arr, key, 0, n - 1);
+        // Output result
+        if (index != -1) {
+            System.out.println("Key " + key + " found at index " + index + ".");
+        } else {
+            System.out.println("Key " + key + " not found in the array.");
+        }
+        sc.close();
+    }
+}
